@@ -1,33 +1,38 @@
 package com.example.eventapp.model;
 
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table
 public class Event {
+	
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	private String desc;
-	private LocalDateTime dateTime;
-	//private String status="pending";
+	private String description;
+	private LocalDate date;
+	private LocalTime time;
 	private String status;
 	
 	public Event() {
 		
 	}
-	public Event(String name, String desc, LocalDateTime dateTime, String status) {
+	public Event(String name, String description, LocalDate date, LocalTime time, String status) {
 		super();
 		this.name = name;
-		this.desc = desc;
-		this.dateTime = dateTime;
+		this.description = description;
+		this.date = date;
+		this.time=time;
 		this.status=status;
 	}
 
@@ -47,20 +52,28 @@ public class Event {
 		this.name = name;
 	}
 
-	public String getDesc() {
-		return desc;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public LocalDateTime getDateTime() {
-		return dateTime;
+	public LocalTime getTime() {
+		return time;
 	}
 
-	public void setDateTime(LocalDateTime date) {
-		this.dateTime = date;
+	public void setTime(LocalTime time) {
+		this.time = time;
+	}
+	
+	public LocalDate getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDate date) {
+		this.date = date;
 	}
 
 	public String getStatus() {
