@@ -1,9 +1,9 @@
 package com.example.eventapp.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,9 +47,12 @@ public class EventController {
 	}
 	
 	@PutMapping("/complete/{id}")
-//	public ResponseEntity<Event> markEvent(@PathVariable long id) {
-//		return ResponseEntity.ok(eventService.markEvent(id));
 	public Event markEvent(@PathVariable long id) {
 		return eventService.markEvent(id);
+	}
+	
+	@GetMapping("/groupByStatus")
+	public Map<String, List<Event>> getEventsGrouped() {
+		return eventService.getEventsGrouped();
 	}
 }
