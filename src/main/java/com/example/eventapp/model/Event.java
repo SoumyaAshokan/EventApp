@@ -4,6 +4,7 @@ package com.example.eventapp.model;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,17 +12,28 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table
+@Table(name="event")
 public class Event {
 	
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="event_id")
 	private Long id;
+	
+	@Column(name="event_name")
 	private String name;
+	
+	@Column(name="event_desc")
 	private String description;
+	
+	@Column(name="event_date")
 	private LocalDate date;
+	
+	@Column(name="event_time")
 	private LocalTime time;
+	
+	@Column(name="event_status")
 	private String status;
 	
 	public Event() {

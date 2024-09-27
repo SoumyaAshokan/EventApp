@@ -17,6 +17,10 @@ public class EventService {
 	
 	@Autowired
 	EventRepository eventRepo;
+	
+	private static final String PENDING="pending";
+	private static final String COMPLETED="completed";
+	private static final String OVERDUE="overdue";
 
 	public List<Event> getEvents() {
 		return eventRepo.findAll();
@@ -27,7 +31,7 @@ public class EventService {
 	}
 	
 	public void createEvent(Event event) {
-		event.setStatus("pending");
+		event.setStatus(PENDING);
 		eventRepo.save(event);
 	}
 
@@ -41,7 +45,7 @@ public class EventService {
 
 	public Event markEvent(long id) {
 		Event event= eventRepo.findById(id).orElse(new Event());
-		event.setStatus("completed");
+		event.setStatus(COMPLETED);
 		return eventRepo.save(event);
 	}
 	
@@ -51,20 +55,20 @@ public class EventService {
 		
 		Map<String, List<Event>> groupedEvents=new HashMap<>();
 		List<Event> pendingEvents=allEvents.stream()
-										   .filter(event->event.getStatus().equals("pending") && event.getDate().isAfter(now))
+										   .filter(event->event.getStatus().equals(PENDING) && event.getDate().isAfter(now))
 										   .collect(Collectors.toList());
 		//overdue
 		List<Event> overdueEvents=allEvents.stream()
-										  .filter(event->event.getStatus().equals("pending") && event.getDate().isBefore(now))
+										  .filter(event->event.getStatus().equals(PENDING) && event.getDate().isBefore(now))
 										  .collect(Collectors.toList());
 		
 		List<Event> completedEvents=allEvents.stream()
-											 .filter(event->event.getStatus().equals("completed"))
+											 .filter(event->event.getStatus().equals(COMPLETED))
 											 .collect(Collectors.toList());
 		
-		groupedEvents.put("pending",pendingEvents);
-		groupedEvents.put("overdue",overdueEvents);
-		groupedEvents.put("completed", completedEvents);
+		groupedEvents.put(PENDING,pendingEvents);
+		groupedEvents.put(OVERDUE,overdueEvents);
+		groupedEvents.put(COMPLETED, completedEvents);
 		
 		return groupedEvents;
 	}
